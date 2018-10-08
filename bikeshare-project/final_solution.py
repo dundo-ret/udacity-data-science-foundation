@@ -20,24 +20,24 @@ def get_filters():
     # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
     city_list = CITY_DATA.keys()
     
-    city = input('\nWould you like to see data for Chicago, New York City or Washington?')
+    city = input('\nWould you like to see data for Chicago, New York City or Washington?\n')
     while city.lower() not in city_list:
         print("Please enter from the three cities mentioned")
-        city = input('Would you like to see data for Chicago, New York City or Washington?')
+        city = input('Would you like to see data for Chicago, New York City or Washington?\n')
         
     # get user input for month (all, january, february, ... , june)
     month_list = ["all","january","february","march","april","may","june"]
-    month = input('\nWhich month would you like to filter for (all, january, february, ... ,june) ?')
+    month = input('\nWhich month would you like to filter for (all, january, february, ... ,june)?\n')
     while month.lower() not in month_list:
         print("Please enter month as mentioned above")
-        month = input("Which month would you like to filter for?")
+        month = input("Which month would you like to filter for?\n")
 
     # get user input for day of week (all, monday, tuesday, ... sunday)
     day_list = ["all","monday","tuesday","wednesday","thursday","friday","saturday","sunday"]
-    day = input('\nWhich day would you like to see data for(all, Monday, Tuesday...)?')
+    day = input('\nWhich day would you like to see data for(all, Monday, Tuesday...)?\n')
     while day.lower() not in day_list:
         print("Please enter day as mentioned above.")
-        day = input("Which day would you like to see data for(all, Monday, Tuesday...)?")
+        day = input("Which day would you like to see data for(all, Monday, Tuesday...)?\n")
 
     print('-'*40)
     return city.lower(), month.lower(), day.lower()
@@ -57,7 +57,7 @@ def load_data(city, month, day):
     
     df['Start Time'] = pd.to_datetime(df['Start Time'])
     df['month'] = df['Start Time'].dt.month
-    df['day_of_week'] = df['Start Time'].dt.dayofweek 
+    df['day_of_week'] = df['Start Time'].dt.weekday_name 
     df['hour'] = df['Start Time'].dt.hour
     
     if month != 'all':
@@ -66,7 +66,7 @@ def load_data(city, month, day):
         df = df[df['month'] == month]
         
     if day != 'all':    
-        df = df[df['day_of_week'] == int(day)]
+        df = df[df['day_of_week'] == day.title()]
     return df
 
 
@@ -76,8 +76,8 @@ def raw_data(df):
     """
     index=0
     i=0
-    while i< df.count()[0]:
-        raw = input("Would you like to see individual trip data:")
+    while i>=0:
+        raw = input("Would you like to see individual trip data (yes or no):")
         if raw.lower() == "no":
             break    
 
